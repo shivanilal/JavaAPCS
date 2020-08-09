@@ -1,0 +1,139 @@
+public class Main{
+    public static void main(){
+        System.out.println("x\ty");
+        for(int i = 0; i<=10; i++){
+            System.out.println("i\t"+linear(i,2,3));
+        }
+        System.out.println("n\tnth Fib number");
+        for(int i = 1; i<=25; i++){
+            System.out.println(i+"\t"+fib(i));
+        }
+        for(int r = 1; r <= 10; r++){
+            for(int c = 1; c<= r; c++){
+                System.out.print(pascals(r,c) + "\t");
+            }
+            System.out.println();
+        }
+        for(int i = 1000; i< 10000; i++)
+            if(isPalindrome(Integer.toString(i)))
+                System.out.println(i);
+        System.out.println(pigLatin("hello my name is Shivani"));
+    }
+    public static int linear(int x, int m, int b){
+        if(x==0)
+            return b;
+        else 
+            return m + linear(x-1,m,b);
+    }
+    public static int fib(int n){
+        if(n<3)
+            return 1;
+        else 
+            return fib(n-1) + fib(n-2);
+    }
+    public static int pascals(int r, int c){
+        if(r==c||c==1)
+            return 1;
+        else
+            return pascals(r-1, c-1) + pascals(r-1,c);
+    }
+    public static int quadratic(int x, int a, int b, int c){
+        if(x==0)
+            return c;
+        else 
+            return quadratic(x-1,a,b,c) + b + a*(x + x-1);
+    }
+    public static int quadratic2(int x, int a, int b, int c){
+        if(x==0)
+            return c;
+        else 
+            return quadratic(x-1,a,b,c) + linear(x,a+a,b-a);
+    }
+    public static String doubleLetters(String s){
+        if(s==null||s.compareTo("")==0)
+            return "";
+        else 
+            return s.substring(0,1) + s.substring(0,1) + doubleLetters(s.substring(1));
+    }
+    public static String capVowel(String s){
+        if(s==null || s.compareTo("")==0)
+            return "";
+        else if(s.substring(0,1).compareTo("a")==0||
+                s.substring(0,1).compareTo("e")==0||
+                s.substring(0,1).compareTo("i")==0||
+                s.substring(0,1).compareTo("o")==0||
+                s.substring(0,1).compareTo("u")==0)
+            return s.substring(0,1).toUpperCase() + capVowel(s.substring(1));
+        else
+            return s.substring(0,1) + capVowel(s.substring(1));
+    }
+    public static String reverse(String s){
+        if(s==null || s.compareTo("")==0)
+            return "";
+        else
+            return s.substring(s.length()-1,s.length()) + reverse(s.substring(0,s.length()-1));
+    }
+    public static boolean isPalindrome(String s){
+        String reverse = reverse(s);
+        if(reverse.compareTo(s) == 0){
+            return true;
+        }
+        return false;
+    }
+    public static String beforeVowel(String s){
+        if(s==null||s.compareTo("")==0||
+           s.substring(0,1).toUpperCase().compareTo("A")==0||
+           s.substring(0,1).toUpperCase().compareTo("E")==0||
+           s.substring(0,1).toUpperCase().compareTo("I")==0||
+           s.substring(0,1).toUpperCase().compareTo("O")==0||
+           s.substring(0,1).toUpperCase().compareTo("U")==0)
+           return "";
+        else
+            return s.substring(0,1) + beforeVowel(s.substring(1));
+    }
+    public static String afterVowel(String s){
+        if(s==null||s.compareTo("")==0)
+            return "";
+        else if(s.substring(0,1).toUpperCase().compareTo("A")==0||
+                s.substring(0,1).toUpperCase().compareTo("E")==0||
+                s.substring(0,1).toUpperCase().compareTo("I")==0||
+                s.substring(0,1).toUpperCase().compareTo("O")==0||
+                s.substring(0,1).toUpperCase().compareTo("U")==0)
+            return s.substring(0,1) + s.substring(1);
+        else
+            return afterVowel(s.substring(1));
+    }
+    public static String noLeadingWhiteSpace(String s){
+        if(s==null||s.compareTo("")==0)
+            return "";
+        else if(s.substring(0,1).compareTo(" ")==0)
+            return noLeadingWhiteSpace(s.substring(1));
+        else
+            return s;
+    }
+    public static String beforeSpace(String s){
+        if(s==null||s.compareTo("")==0|| s.substring(0,1).compareTo(" ") ==0)
+           return "";
+        else
+            return s.substring(0,1) + beforeSpace(s.substring(1));
+    }
+    public static String afterSpace(String s){
+        if(s==null||s.compareTo("")==0)
+            return "";
+        else if(s.substring(0,1).compareTo(" ")==0)
+            return s.substring(1);
+        else
+            return afterSpace(s.substring(1));
+    }
+    public static String pigLatin(String s){
+        s=noLeadingWhiteSpace(s);
+        String w = beforeSpace(s);
+        String rest = afterSpace(s);
+        if(s==null||s.compareTo("")==0)
+            return "";
+        else
+            return afterVowel(w) + beforeVowel(w) + "ay " + pigLatin(rest);
+    }
+}
+
+
