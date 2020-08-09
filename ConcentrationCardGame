@@ -1,0 +1,261 @@
+public class Card{
+   public int face, suit;
+   public boolean isFaceUp;
+   public Card(int f, int s, boolean faceUp){
+       face = f;
+       suit = s;
+       isFaceUp = faceUp;
+   }
+   public Card(){
+       face = 0;
+       suit = 0;
+       isFaceUp = true;
+   }
+   public static String cardToString(Card c){
+       String rv = "";
+       if(c == null)
+           return rv;
+       if(c.suit == 1)
+           rv += "S";
+       else if(c.suit == 2)
+           rv+= "H";
+       else if(c.suit == 3)
+           rv+= "C";
+       else if(c.suit == 4)
+           rv+= "D";
+       if(c.face == 1)
+           rv+="A";
+       for(int i = 2; i < 10; i++){
+           if(c.face == i)
+               rv += i;
+       }
+       if(c.face == 10)
+           rv+="X";
+       if(c.face == 11)
+           rv+="J";
+       if(c.face == 12)
+           rv+="Q";
+       if(c.face == 13)
+           rv+="K";
+       return rv;
+   }
+}
+
+
+
+
+
+import java.util.Scanner;
+
+public class Concentration {
+   public static void printBoard(Card[][]b){
+       System.out.print("\t");
+       for(int i=0;i<b[0].length;i++)
+           System.out.print(i+1+"\t");
+       System.out.println();
+       for(int i=0;i<b.length;i++){
+           System.out.print(i+1+"\t");
+           for(int j=0;j<b[i].length;j++){
+               System.out.print(Card.cardToString(b[i][j])+"\t");
+           }
+           System.out.println();
+       }
+   }
+   public static void printBoardFaceUp(Card[][]b){
+       boolean storage;
+       System.out.print("\t");
+       for(int i=0;i<b[0].length;i++)
+           System.out.print(i+1+"\t");
+       System.out.println();
+       for(int i=0;i<b.length;i++){
+           System.out.print(i+1+"\t");
+           for(int j=0;j<b[i].length;j++){
+               if(b[i][j]!=null){
+                   storage=b[i][j].isFaceUp;
+                   b[i][j].isFaceUp=true;
+                   System.out.print(Card.cardToString(b[i][j])+"\t");
+                   b[i][j].isFaceUp=storage;
+               }
+               else
+                   System.out.print(Card.cardToString(b[i][j])+"\t");
+           }
+           System.out.println();
+       }
+   }
+
+
+   public static Card[] createRandomDeck() {
+       Card[] deck = new Card[52];
+       int randomIndex = 0;
+       Card storage;
+       for (int i = 0; i < 52; i++)
+           deck[i] = new Card(i % 13 + 1, i / 13 + 1, false);
+       //shuffle;
+       for (int i = 0; i < 52; i++) {
+           randomIndex = (int) (Math.random() * 52);
+           storage = deck[i];
+           deck[i] = deck[randomIndex];
+           deck[randomIndex] = storage;
+       }
+       return deck;
+   }
+
+   public static Card[][] createRandomBoard() {
+       Card[] deck = createRandomDeck();
+       //shuffle
+       Card[][] deck2 = new Card[7][8];
+       for (int i = 0; i < 52; i++)
+           deck2[i / 8][i % 8] = deck[i];
+       return deck2;
+   }
+
+   public static void play() {
+       Scanner userInput = new Scanner(System.in);
+       int points1 = 0, points2 = 0;
+       boolean correct = true, repeat = true;
+       int[] response1 = new int[2];
+       int[] response2 = new int[2];
+       int nullcount = 0;
+       Card[][] deck = createRandomBoard();
+
+       System.out.println("Welcome to Concentration!");
+       System.out.println("For picking a card, type in the row and then the column number!");
+       System.out.println("Type 'start' and click enter to begin the game!");
+       userInput.next();
+       while (repeat) {
+           while (correct) {
+               System.out.println();
+               System.out.println("Points Player 1: " + points1);
+               System.out.println("Points Player 2: " + points2);
+               System.out.println();
+
+               printBoard(deck);
+               System.out.println();
+               System.out.println("Player 1, which cards do you want to pick");
+               System.out.println();
+               System.out.print("Card 1 row number: ");
+               response1[0] = Integer.parseInt(userInput.next());
+               System.out.print("Card 1 column number: ");
+               response1[1] = Integer.parseInt(userInput.next());
+               deck[(response1[0] - 1)][(response1[1] - 1)].isFaceUp = true;
+               System.out.println();
+               printBoard(deck);
+               System.out.print("Card 2 row number: ");
+               response2[0] = Integer.parseInt(userInput.next());
+               System.out.print("Card 2 column number: ");
+               response2[1] = Integer.parseInt(userInput.next());
+               System.out.println();
+               deck[(response2[0] - 1)][(response2[1] - 1)].isFaceUp = true;
+               printBoard(deck);
+               System.out.println();
+
+               if (deck[(response2[0] - 1)][(response2[1] - 1)].face == deck[(response1[0] - 1)][(response1[1] - 1)].face) {
+                   System.out.println("Correct Match");
+                   points1++;
+                   deck[(response2[0] - 1)][(response2[1] - 1)] = null;
+                   deck[(response1[0] - 1)][(response1[1] - 1)] = null;
+               } else {
+                   System.out.println("Incorrect Match");
+                   deck[(response1[0] - 1)][(response1[1] - 1)].isFaceUp = false;
+                   deck[(response2[0] - 1)][(response2[1] - 1)].isFaceUp = false;
+                   correct = false;
+               }
+           }
+           correct = true;
+           for (int i = 0; i < deck[0].length; i++)
+               for (int j = 0; j < deck.length; j++)
+                   if (deck[j][i] == null)
+                       nullcount++;
+           if (nullcount == 56) {
+               repeat = false;
+               correct = false;
+           }
+           while (correct) {
+               System.out.println();
+               System.out.println("Points Player X: " + points1);
+               System.out.println("Points Player Y: " + points2);
+               System.out.println();
+
+               printBoard(deck);
+               System.out.println();
+               System.out.println("Player 2, which cards do you want to pick");
+               System.out.println();
+               System.out.print("Card 1 row number: ");
+               response1[0] = Integer.parseInt(userInput.next());
+               System.out.print("Card 1 column number: ");
+               response1[1] = Integer.parseInt(userInput.next());
+               System.out.println();
+               deck[(response1[0] - 1)][(response1[1] - 1)].isFaceUp = true;
+               printBoard(deck);
+               System.out.print("Card 2 row number: ");
+               response2[0] = Integer.parseInt(userInput.next());
+               System.out.print("Card 2 column number: ");
+               response2[1] = Integer.parseInt(userInput.next());
+               System.out.println();
+               deck[(response2[0] - 1)][(response2[1] - 1)].isFaceUp = true;
+               printBoard(deck);
+               System.out.println();
+
+               if (deck[(response2[0] - 1)][(response2[1] - 1)].face == deck[(response1[0] - 1)][(response1[1] - 1)].face) {
+                   System.out.println("Correct");
+                   points2++;
+                   deck[(response2[0] - 1)][(response2[1] - 1)] = null;
+                   deck[(response1[0] - 1)][(response1[1] - 1)] = null;
+               } else {
+                   System.out.println("Wrong");
+                   deck[(response1[0] - 1)][(response1[1] - 1)].isFaceUp = false;
+                   deck[(response2[0] - 1)][(response2[1] - 1)].isFaceUp = false;
+                   correct = false;
+               }
+           }
+           correct = true;
+           for (int i = 0; i < deck[0].length; i++)
+               for (int j = 0; j < deck.length; j++)
+                   if (deck[j][i] == null)
+                       nullcount++;
+           if (nullcount == 56)
+               repeat = false;
+       }
+
+       System.out.println();
+       System.out.println("Points Player 1: " + points1);
+       System.out.println("Points Player 2: " + points2);
+       System.out.println();
+
+       if (points1 > points2)
+           System.out.println("Player 1 wins");
+       else if (points1 < points2)
+           System.out.println("Player 2 wins");
+       else
+           System.out.println("Tie");
+   }
+
+public class Main{
+   public static void main(String[] args){
+       Card[][]deck=new Card[7][8];
+       int face=1, suit=1;
+       for(int i=0;i<deck.length;i++){
+           for(int j=0;j<deck[i].length;j++){
+               if(face>13){
+                   face=1;
+                   suit++;
+               }
+               if(suit>4)
+                   deck[i][j]=null;
+               else{
+                   deck[i][j]=new Card(face,suit,false);
+                   face++;
+               }
+           }
+       }
+       Concentration.play();
+       Concentration.printBoardFaceUp(Concentration.createRandomBoard());
+   }
+
+   public static Card[][] createBoard(){
+       Card[][]c = new Card[7][8];
+       for(int i = 0; i< 52;i++)
+           c[i/8][i%8] = new Card(i%13+1, i/13+1, true);
+       return c;
+   }
+}
