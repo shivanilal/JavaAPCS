@@ -1,0 +1,282 @@
+public class Main {
+
+   public static void main(String[] args) {
+       int[] a = {1, 2, 3, 4, 5};
+       int[][] b = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+       String s = "", t = "";
+       System.out.println("Task 1&2\nTesting arrayToString():");
+       try {
+           s = "{1, 2, 3, 4, 5}";
+           t = arrayToString(a);
+           if (s.compareTo(t) != 0)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println(s + "\t" + t + "\t");
+
+           s = "null";
+           a = null;
+           t = arrayToString(a);
+           if (s.compareTo(t) != 0)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println(s + "\t" + t + "\t");
+
+           s = "{{1, 2, 3},\n {4, 5, 6},\n {7, 8, 9}}";
+           t = arrayToString(b);
+           if (s.compareTo(t) != 0)
+               System.out.println("FAIL\t");
+           else
+               System.out.println("PASS\t");
+           System.out.print(s + "\n" + t);////////////////////////
+
+       } catch (Exception e) {
+           System.out.println("\nFAIL arrayToString().\n");
+       }
+       System.out.println("\nCan't test TicTacToe, function interface wasn't given.\n");
+
+       int[][] c = {{10, 10, 10}, {20, 20}, {30, 30, 30, 30}};
+       int sumValue = 0;
+       int[][] d = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 1}, {2, 3, 4, 5, 6}, {7, 8, 9, 1, 2}, {3, 4, 5, 6, 7}};
+       System.out.println("Task 4-6\nTesting sum functions:");
+       try {
+           sumValue = sum(c);
+           if (sumValue != 190)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("sum(): 190\t" + sumValue + "\t");
+
+           sumValue = sumMajor(d);
+           if (sumValue != 20)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("sumMajor(): 20\t" + sumValue + "\t");
+           sumValue = sumMinor(d);
+           if (sumValue != 29)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("sumMajor(): 29\t" + sumValue + "\t");
+       } catch (Exception e) {
+           System.out.println("\nFAIL sum(), sumMajor(), sumMinor().\n");
+       }
+
+       int[] e1 = {-5, -7, -3, -2, -9, -5, -1};
+       int minValue = 0;
+       int[][] f = {{10, 2, 3, 4, 5}, {6, 7, 8, 9, 10}, {2, 3, 4, 5, 6}, {7, 8, 9, 10, 2}, {3, 4, 5, 6, 7}};
+       System.out.println("Task 7-9\nTesting min functions:");
+       try {
+           minValue = min(e1);
+           if (minValue != -9)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("min(): -9\t" + minValue + "\t");
+
+           minValue = min(f);
+           if (minValue != 2)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("min(): 2\t" + minValue + "\t");
+           minValue = min2(f);
+           if (minValue != 2)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("min(): 2\t" + minValue + "\t");
+       } catch (Exception e) {
+           System.out.println("\nFAIL min(), min2().\n");
+       }
+
+       int[][] g = {{1, 2, 3, 4, 5}, {6, 7, 8, 9, 0}, {1, 2, 3, 4, 5}, {6, 7, 8, 9, 0}, {1, 2, 3, 4, 5}};
+       int[][] h = {{1, 6, 1, 6, 1}, {2, 7, 2, 7, 2}, {3, 8, 3, 8, 3}, {4, 9, 4, 9, 4}, {5, 0, 5, 0, 5}};
+       String u = "", v = "";
+       System.out.println("Task 10\nTesting rotate():");
+       try {
+           rotate(g);
+           u = arrayToString(g);
+           v = arrayToString(h);
+           if (s.compareTo(t) != 0)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("rotate():\n" + u + "\n" + v);       //////////
+       } catch (Exception e) {
+           System.out.println("\nFAIL rotate().\n");
+       }
+
+       int[][] k = {{1, 2, 3, 4, 5}, {6, 7}, {1, 2, 3}, {6}, {6, 5, 4, 3, 2, 1}};
+       int[][] m = {{1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, {1, 1, 2, 2, 3, 3, 4, 4, 5, 5}, {6, 6, 7, 7},
+               {6, 6, 7, 7}, {1, 1, 2, 2, 3, 3}, {1, 1, 2, 2, 3, 3}, {6, 6}, {6, 6},
+               {6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1}, {6, 6, 5, 5, 4, 4, 3, 3, 2, 2, 1, 1}};
+       String w = "", x = "";
+       System.out.println("Task 10\nTesting expand():");
+       try {
+           w = arrayToString(expand(k));
+           x = arrayToString(m);
+           if (w.compareTo(x) != 0)
+               System.out.print("FAIL\t");
+           else
+               System.out.print("PASS\t");
+           System.out.println("expand():\n" + w + "\n" + x);        ///////////
+       } catch (Exception e) {
+           System.out.println("\nFAIL expand().\n");
+       }
+
+       System.out.println("\nThese are your triangles. Just make sure they match the spec sheet.");
+       try {
+           printPatterns();
+           System.out.println(arrayToString(pascalsTriangle(5)));
+       } catch (Exception e) {
+           System.out.println("\nFAIL printPatterns() and pascalsTriangle().\n");
+       }
+   } // end main()
+
+
+   public static String arrayToString(int[] a) {
+       String rv = "{";
+       if (a == null)
+           return rv = "null";
+       for (int i = 0; i < a.length; i++)
+           if (i == a.length - 1)
+               rv += a[i] + "}";
+           else
+               rv += a[i] + ", ";
+       return rv;
+   }
+
+   public static String arrayToString(int[][] a) {
+       String rv = "";
+       for (int i = 0; i < a.length; i++) {
+           if (i == 0)
+               rv += arrayToString(a[0]);
+           else
+               rv += ",\n " + arrayToString(a[i]);
+       }
+       return "{" + rv + "}";
+   }
+
+   public static boolean ticTacToe(int[][] a) {
+       boolean ticTacToe = false;
+       for (int i = 0; i < a.length; i++) {
+           if (a[i][0] == a[i][1] && a[i][1] == a[i][2] && a[i][2] != 0
+                   || a[0][i] == a[1][i] && a[1][i] == a[2][i] && a[2][i] != 0
+                   || a[0][0] == a[1][1] && a[1][1] == a[2][2] && a[2][2] != 0
+                   || a[0][2] == a[1][1] && a[1][1] == a[2][0] && a[2][0] != 0)
+               ticTacToe = true;
+       }
+       return ticTacToe;
+   }
+
+   public static int sum(int[][] a) {
+       int sum = 0;
+       for (int i = 0; i < a.length; i++)
+           for (int j = 0; j < a[i].length; j++)
+               sum += a[i][j];
+       return sum;
+   }
+
+   public static int sumMajor(int[][] a) {
+       int sum = 0;
+       for (int i = 0; i < a.length; i++)
+           sum += a[i][i];
+       return sum;
+   }
+
+   public static int sumMinor(int[][] a) {
+       int sum = 0;
+       for (int i = 0; i < a.length; i++)
+           sum += a[i][a.length - 1 - i];
+       return sum;
+   }
+
+   public static int min(int[] a) {
+       int min = a[0];
+       for (int i = 1; i < a.length; i++)
+           if (a[i] < min)
+               min = a[i];
+       return min;
+   }
+
+   public static int min(int[][] a) {
+       int min = min(a[0]);
+       for (int i = 1; i < a.length; i++)
+           if (min(a[i]) < min)
+               min = min(a[i]);
+       return min;
+   }
+
+   public static int min2(int[][] a) {
+       int min = a[0][0];
+       for (int i = 0; i < a.length; i++)
+           for (int j = 0; j < a[i].length; j++)
+               if (a[i][j] < min)
+                   min = a[i][j];
+       return min;
+   }
+
+   public static int[][] rotate(int[][] a) {
+       for (int i = 0; i < a.length / 2; i++) {
+           for (int j = 0; j < a.length - i - 1; j++) {
+               int storage = a[i][j];
+               a[i][j] = a[a.length - 1 - j][i];
+               a[a.length - 1 - j][i] = a[a.length - 1 - i][a.length - 1 - j];
+               a[a.length - 1 - i][a.length - 1 - j] = a[j][a.length - 1 - i];
+               a[j][a.length - 1 - i] = storage;
+           }
+       }
+       return a;
+   }
+
+   public static int[][] expand(int[][] a) {
+       int[][] e = new int[a.length * 2][];
+       for (int i = 0; i < e.length; i++) {
+           e[i] = new int[a[i / 2].length * 2];
+           for (int j = 0; j < e[i].length; j++) {
+               e[i][j] = a[i / 2][j / 2];
+           }
+       }
+       return e;
+   }
+
+   public static void printPatterns() {
+       String pattern1 = "";
+       for (int i = 1; i <= 5; i++) {
+           pattern1 += i;
+           System.out.println(pattern1);
+       }
+       System.out.println();
+       for (int i = 5; i >= 1; i--) {
+           for (int j = i; j >= 1; j--)
+               System.out.print(j);
+           System.out.print("\n");
+       }
+       System.out.println();
+       for (int i = 5; i >= 1; i--) {
+           for (int j = 5; j >= i; j--)
+               System.out.print(i);
+           System.out.print("\n");
+       }
+       System.out.println();
+   }
+
+   public static int[][] pascalsTriangle(int n) {
+       int [][] pascal = new int[n][];
+       for (int r=0; r<n; r++) {
+           pascal[r] = new int[r+1];
+           pascal[r][0] = 1;
+           pascal[r][r] = 1;
+           for (int c=1; c<r; c++) {
+               pascal[r][c] = pascal[r-1][c] + pascal[r-1][c-1];
+           }
+       }
+
+       return pascal;
+   }
+}
+
+
