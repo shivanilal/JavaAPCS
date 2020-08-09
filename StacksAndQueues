@@ -1,0 +1,133 @@
+import java.util.Scanner;
+
+public class Main {
+   public static void main(String[] args) {
+       Stack a = new Stack();
+       a.push("Chelsea");
+       a.push("Mahek");
+       a.push("Sahithya");
+       a.push("Ishya");
+       a.push("Nivedha");
+       a.push("Shivani");
+       for (int i = 0; i < a.size(); i++) {
+           System.out.println(a.toString());
+           a.pop();
+           i--;
+       }
+       System.out.println("Choose an Option from the Menu!");
+       System.out.println("1. Add Person to Queue");
+       System.out.println("2. Remove Person from Queue");
+       System.out.println("3. Print Queue");
+       System.out.println("4. Bubble Sort");
+       System.out.println("9. Exit");
+       Scanner input = new Scanner(System.in);
+       int choice = input.nextInt();
+       Queue q = new Queue();
+       while (choice != 9) {
+           if (choice == 1) {
+               System.out.println("Enter the name of the person: ");
+               String name = input.next();
+               q.enqueue(name);
+               System.out.println(name + " has been added to the queue");
+           } else if (choice == 2) {
+               q.dequeue();
+               System.out.println("The first person in the queue has been removed.");
+           } else if (choice == 3) {
+               System.out.println(q.toString());
+           } else if (choice == 4) {
+               q.bubbleSort();
+               System.out.println("The queue has been sorted");
+           }
+           System.out.println("Choose another Option from the Menu!");
+           System.out.println("1. Add Person to Queue");
+           System.out.println("2. Remove Person from Queue");
+           System.out.println("3. Print Queue");
+           System.out.println("4. Bubble Sort");
+           System.out.println("9. Exit");
+           choice = input.nextInt();
+       }
+   }
+}
+
+
+
+import java.util.ArrayList;
+
+public class Stack {
+   private ArrayList<String> data;
+
+   public Stack() {
+       data = new ArrayList<String>(0);
+   }
+
+   public void push(String s) {
+       data.add(s);
+   }
+
+   public String pop() {
+       return data.remove(data.size() - 1);
+   }
+
+   public String toString() {
+       String s = "[";
+       for (int i = 0; i < data.size(); i++) {
+           if (i == data.size() - 1)
+               s += data.get(i) + "]";
+           else
+               s += data.get(i) + ", ";
+       }
+       return s;
+   }
+
+   public int size() {
+       return data.size();
+   }
+}
+
+
+
+import java.util.ArrayList;
+
+public class Queue {
+   private ArrayList<String> data;
+
+   public Queue() {
+       data = new ArrayList<String>();
+   }
+
+   public String dequeue() {
+       return data.remove(0);
+   }
+
+   public void enqueue(String s) {
+       data.add(s);
+   }
+
+   public String toString() {
+       String s = "[";
+       for (int i = 0; i < data.size(); i++) {
+           if (i == data.size() - 1)
+               s += data.get(i) + "]";
+           else
+               s += data.get(i) + ", ";
+       }
+       return s;
+   }
+
+   public void bubbleSort() {
+       String storage;
+       for (int i = 0; i < data.size() - 1; i++)
+           for (int j = 0; j < data.size() - i - 1; j++)
+               if (data.get(j).compareTo(data.get(j + 1)) > 0) {
+                   storage = data.get(j);
+                   data.set(j, data.get(j + 1));
+                   data.set(j + 1, storage);
+               }
+   }
+
+   public int size(){
+       return data.size();
+   }
+}
+
+
