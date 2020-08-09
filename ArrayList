@@ -1,0 +1,148 @@
+import java.util.Scanner;
+
+public class Dictionary {
+   public ArrayList words;
+   public ArrayList defs;
+
+   public Dictionary() {
+       words = new ArrayList();
+       defs = new ArrayList();
+   }
+
+   public void add(String word, String def) {
+       words.add(word);
+       defs.add(def);
+   }
+
+   public int size() {
+       return words.size();
+   }
+
+   public void randomFlashCard() {
+       System.out.println("Match the word with its definition.");
+       Scanner input = new Scanner(System.in);
+       int num = (int) (Math.random() * words.size());
+       System.out.println(words.get(num));
+       Object[] a = new Object[4];
+       int correctIndex = (int) (Math.random() * a.length);
+       a[correctIndex] = defs.get(num);
+       for (int i = 0; i < a.length - 1; i++) {
+           int index = 0;
+           while (a[index] != null)
+               index = (int) (Math.random() * a.length);
+           num = (int) (Math.random() * defs.size());
+           a[index] = defs.get(num);
+       }
+       String correctAns = "";
+       System.out.println("A. " + a[0]);
+       System.out.println("B. " + a[1]);
+       System.out.println("C. " + a[2]);
+       System.out.println("D. " + a[3]);
+       System.out.println("Correct Answer: ");
+       String ans = input.next();
+       if (correctIndex == 0)
+           correctAns = "a";
+       else if (correctIndex == 1)
+           correctAns = "b";
+       else if (correctIndex == 2)
+           correctAns = "c";
+       else if (correctIndex == 3)
+           correctAns = "d";
+       if (ans.toLowerCase().compareTo(correctAns) == 0)
+           System.out.println("Correct!!");
+       else
+           System.out.println("Wrong!!");
+   }
+}
+
+
+
+
+
+
+
+
+public class ArrayList {
+   private Object[] objectList;
+   public ArrayList(){
+       objectList = new Object[0];
+   }
+   public int size(){
+       if(objectList==null){
+           return 0;
+       }
+       else
+           return objectList.length;
+   }
+   public Object get(int index){
+       return objectList[index];
+   }
+   public Object remove(int index){
+       Object[] a = new Object[objectList.length-1];
+       Object o = objectList[index];
+       for(int i = 0; i<index; i++){
+           a[i] = objectList[i];
+       }
+       for(int i = index; i<a.length; i++){
+           a[i] = objectList[i+1];
+       }
+       objectList = a;
+       return o;
+   }
+
+   public void add(Object obj){
+       Object[] a = new Object[objectList.length+1];
+       for(int i = 0; i<objectList.length; i++){
+           a[i] = objectList[i];
+       }
+       a[objectList.length] = obj;
+       objectList = a;
+   }
+   public void add(int index, Object obj){
+       assert (index==0) && (objectList==null) || objectList != null && index<=objectList.length && index>=0: "Error: add()";
+       Object[] a = new Object[objectList.length+1];
+       for(int i = 0; i<index; i++){
+           a[i] = objectList[i];
+       }
+       a[index] = obj;
+       for(int i = index; i<objectList.length ;i++){
+           a[i+1] = objectList[i];
+       }
+       objectList = a;
+   }
+   public String toString(){
+       String a = "[";
+       for(int i = 0; i<objectList.length; i++){
+           if(i==objectList.length-1)
+               a+= objectList[i] + "]";
+           else
+               a+= objectList[i] + ", ";
+       }
+       return a;
+   }
+}
+
+
+
+
+
+
+
+public class Main {
+
+   public static void main(String[] args) {
+       Dictionary dictionaire = new Dictionary();
+       String[] words = {"Le taureau", "La vache", "La tortue", "Le canard", "Le cochon", "La chèvre", "Le poulet", "Une poule", "Le lapin", "Le mouton", "La brebis"};
+       String[] defs = {"The bull", "The cow", "The turtle", "The duck", "The pig", "The goat", "The chicken", "A hen", "The rabbit", "The sheep", "The ewe"};
+       fillDictionary(dictionaire, words, defs);
+       dictionaire.randomFlashCard();
+
+   }
+
+   public static void fillDictionary(Dictionary d, String[] words, String[] defs) {
+       for (int i = 0; i < words.length; i++) {
+          d.add(words[i],defs[i]);
+       }
+   }
+}
+
